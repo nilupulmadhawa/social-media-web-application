@@ -53,12 +53,6 @@ export const findOneAndUpdateUser = async (filters, data) => {
     return user
 }
 
-export const getAllUserIds = async (filters = {}) => {
-    const users = await User.find(filters).select('_id').lean()
-    return users.map((user) => user._id)
-}
-
-
 export const findOneAndRemoveUser = async (filters) => {
     return await User.findOneAndRemove(filters)
 }

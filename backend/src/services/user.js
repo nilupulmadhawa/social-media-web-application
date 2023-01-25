@@ -16,7 +16,7 @@ export const getUserByID = async (id) => {
         if (!user)
             return {
                 status: 422,
-                message: 'Invalid submission ID'
+                message: 'User not found'
             }
         return user
     } catch (error) {
@@ -51,8 +51,8 @@ export const changePasswordService = async (user, oldPassword, newPassword) => {
 export const updateUserdetails = async (userId, userDetails) => {
     try {
         let userData
-        delete userDetails.password
-        delete userDetails.email
+        if (userDetails.email) { delete userDetails.email }
+        if (userDetails.password) { delete userDetails.password }
         if (userDetails.username) {
             userData = await getOneUser({ username: userDetails.username }, false)
             if (userData && userData?._id.toString() !== userId.toString()) return { status: 422, message: 'Username is already taken' }
@@ -62,7 +62,7 @@ export const updateUserdetails = async (userId, userDetails) => {
         if (!updatedUser)
             return {
                 status: 422,
-                message: 'Invalid user ID'
+                message: 'User not found'
             }
         return updatedUser
     } catch (error) {
@@ -76,7 +76,7 @@ export const deleteById = async (userId) => {
         if (!deleted)
             return {
                 status: 422,
-                message: 'Invalid user ID'
+                message: 'User not found'
             }
         return {
             status: 200,
