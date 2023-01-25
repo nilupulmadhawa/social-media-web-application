@@ -1,8 +1,11 @@
 import express from 'express';
+import authRouter from './auth.routes';
 import userRouter from './user.routes';
+import { protect } from '../middleware/auth'
 
 const router = express.Router();
 
-router.use('/user', userRouter);
+router.use('/auth', authRouter);
+router.use('/user', protect, userRouter);
 
 export default router;
