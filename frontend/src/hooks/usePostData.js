@@ -3,7 +3,7 @@ import { addPost, getAllPosts } from "../services/post";
 
 export const usePostData = () => {
     const { data, isLoading, isError, error, refetch } = useQuery(['posts'], async () => {
-        const response = await getAllPosts();
+        const response = await getAllPosts('sort[created_at]=-1');
         return response.data;
     });
     const { mutate } = useMutation(addPost, {
@@ -18,4 +18,46 @@ export const usePostData = () => {
         refetch,
         mutate
     }
+<<<<<<< Updated upstream
+=======
+}
+
+export const useSortPostData = () => {
+    const { data, isLoading, isError, error, refetch } = useQuery(['s_posts'], async () => {
+        const response = await getAllPosts('sort[created_at]=1');
+        return response.data;
+    });
+    const { mutate } = useMutation(addPost, {
+        onSuccess: () => refetch()
+    });
+
+    return {
+        data,
+        isLoading,
+        isError,
+        error,
+        refetch,
+        mutate
+    }
+}
+
+
+export const useSortLikesPostData = () => {
+    const { data, isLoading, isError, error, refetch } = useQuery(['l_posts'], async () => {
+        const response = await getAllPosts('likes=1');
+        return response.data;
+    });
+    const { mutate } = useMutation(addPost, {
+        onSuccess: () => refetch()
+    });
+
+    return {
+        data,
+        isLoading,
+        isError,
+        error,
+        refetch,
+        mutate
+    }
+>>>>>>> Stashed changes
 }

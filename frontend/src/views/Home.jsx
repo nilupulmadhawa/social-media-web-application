@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useAuthContext } from "../context/AuthContext"
+<<<<<<< Updated upstream
 import { usePostData } from "../hooks/usePostData"
+=======
+import { usePostData, useSortPostData, useSortLikesPostData } from "../hooks/usePostData"
+>>>>>>> Stashed changes
 import Loading from 'react-fullscreen-loading';
 
 import Feeds from "../components/Feeds";
@@ -11,6 +15,11 @@ import FeedUpload from "../components/FeedUpload";
 
 export default function Home() {
     const { user } = useAuthContext();
+<<<<<<< Updated upstream
+=======
+    const spost = useSortPostData();
+    const lpost = useSortLikesPostData();
+>>>>>>> Stashed changes
     const { isLoading, error, data } = usePostData();
     const [posts, setPosts] = useState(data)
     const [sort, setSort] = useState("Newest")
@@ -49,10 +58,7 @@ export default function Home() {
             setPosts(p?.sort(dynamicSort("-created_at")))
         }
         if (sort == "Popular") {
-            // setPosts(p.sort((a, b) => parseFloat(a.likes.length) - parseFloat(b.likes.length)))
-            setPosts(p.sort(function (a, b) {
-                return parseFloat(a.likes.length) - parseFloat(b.likes.length)
-            }))
+            setPosts(lpost.data)
         }
     }, [sort])
 
@@ -67,8 +73,13 @@ export default function Home() {
                         <FeedUpload />
                         <select class="text-xl mb-4 focus:outline-none" defaultValue={'Newest'} onChange={(e) => setSort(e.target.value)}>
                             <option>Newest</option>
+<<<<<<< Updated upstream
                             <option>Featured</option>
                             {/* <option>Popular</option> */}
+=======
+                            <option >Oldest</option>
+                            <option>Popular</option>
+>>>>>>> Stashed changes
                         </select>
 
                         {isLoading && <FeedLoading />}

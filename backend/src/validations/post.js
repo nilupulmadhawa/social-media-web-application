@@ -20,7 +20,8 @@ export const postViewSchema = {
         })
         .optional(),
     page: Joi.number().optional(),
-    limit: Joi.number().optional()
+    limit: Joi.number().optional(),
+    likes: Joi.number().optional()
 }
 
 export const postIdSchema = {
