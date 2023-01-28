@@ -1,4 +1,4 @@
-import { insertPost,findOneAndUpdatePost, findOneAndRemovePost, getOnePost, getAllPosts } from '../repository/post'
+import { insertPost, findOneAndUpdatePost, findOneAndRemovePost, getOnePost, getAllPosts } from '../repository/post'
 
 export const createPost = async (data, user) => {
     data = { ...data, user_id: user._id }
@@ -58,4 +58,24 @@ export const deleteById = async (postId) => {
     }
 }
 
+export const likePost = async (postId, userId) => {
+    try {
+        const post = await getOnePost({ _id: postId })
+        if (!post.likes.some(p => p.toString() == userId.toString())) {
+            await updatePostdetails({ _id: postId }, { $push: { likes: userId } });
+            return {
+                status: 200,
+                message: 'The post has been liked'
+            }
+        } else {
 
+            await updatePostdetails({ _id: postId }, { $pull: { likes: userId } });
+            return {
+                status: 200,
+                message: 'The post has been disliked'
+            }
+        }
+    } catch (err) {
+        return err;
+    }
+}

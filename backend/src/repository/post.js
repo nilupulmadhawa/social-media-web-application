@@ -6,7 +6,7 @@ export const insertPost = async (post) => {
     return postMade
 }
 
-export const getAllPosts = async ({ sort = {}, filter = {}, page, limit = 10 }) => {
+export const getAllPosts = async ({ sort = { created_at: -1 }, filter = {}, page, limit = 0 }) => {
     const options = {
         page,
         limit,
@@ -16,17 +16,13 @@ export const getAllPosts = async ({ sort = {}, filter = {}, page, limit = 10 }) 
     }
 
     if (Object.keys(sort).length > 0) options.sort = sort
-
-    if (filter.post_count) {
-        filter.posts = { $size: Number(filter.post_count) }
-        delete filter.post_count
-    }
+    console.log(options);
 
     const aggregateQuery = () =>
         Post.aggregate([
             {
                 $match: filter
-            }
+            },
         ])
 
     return await (page ? Post.aggregatePaginate(aggregateQuery(), options) : aggregateQuery()).catch((err) => {

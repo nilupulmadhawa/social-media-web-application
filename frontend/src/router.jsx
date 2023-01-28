@@ -6,6 +6,8 @@ import GuestLayout from "./layout/GuestLayout";
 import Login from "./views/Login";
 import NotFound from "./views/NotFound";
 import Signup from "./views/Signup";
+import Home from "./views/Home";
+import Profile from "./views/Profile";
 
 const router = createBrowserRouter([
     {
@@ -14,11 +16,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Navigate to="/login" />
+                element: <Home />
             },
             {
-                path: '/dashboard',
-                element: <NotFound />
+                path: '/profile',
+                element: <Profile />
             },
         ]
     },

@@ -54,3 +54,4 @@ export const changePassword = asyncHandler(async (req, res) => {
         return makeResponse({ res, status: 500, message: error.message });
     }
 })
+

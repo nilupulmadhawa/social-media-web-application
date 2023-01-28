@@ -18,11 +18,6 @@ export const getAllUsers = async ({ sort = {}, filter = {}, page, limit = 10 }) 
 
     if (Object.keys(sort).length > 0) options.sort = sort
 
-    if (filter.member_count) {
-        filter.members = { $size: Number(filter.member_count) }
-        delete filter.member_count
-    }
-
     const aggregateQuery = () =>
         User.aggregate([
             {
@@ -52,6 +47,12 @@ export const findOneAndUpdateUser = async (filters, data) => {
     delete user.password
     return user
 }
+
+export const getAllUserIds = async (filters = {}) => {
+    const users = await User.find(filters).select('_id').lean()
+    return users.map((user) => user._id)
+}
+
 
 export const findOneAndRemoveUser = async (filters) => {
     return await User.findOneAndRemove(filters)

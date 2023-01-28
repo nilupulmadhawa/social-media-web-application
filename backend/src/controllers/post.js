@@ -1,6 +1,6 @@
 import asyncHandler from '../middleware/async'
 import { makeResponse } from '../utils/response'
-import { createPost, getPosts, getPostByID, updatePostdetails, deleteById } from '../services/post'
+import { createPost, getPosts, getPostByID, updatePostdetails, deleteById, likePost } from '../services/post'
 
 export const create = asyncHandler(async (req, res) => {
     const result = await createPost(req.body, req.user)
@@ -56,3 +56,13 @@ export const remove = asyncHandler(async (req, res) => {
     }
 })
 
+export const like = asyncHandler(async (req, res) => {
+    try {
+        const result = await likePost(req.params.id, req.user._id)
+        if (!result) return makeResponse({ res, status: 500, message: 'Failed to like post' })
+        if (result.status) return makeResponse({ res, ...result })
+        return makeResponse({ res, status: 200, data: result, message: result.message })
+    } catch (error) {
+        return makeResponse({ res, status: 500, message: error.message });
+    }
+})
