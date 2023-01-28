@@ -41,7 +41,6 @@ export default function Home() {
 
     useEffect(() => {
         // setLoading(true)
-        console.log(sort);
         let p = posts;
         if (sort == "Newest") {
             setPosts(data)

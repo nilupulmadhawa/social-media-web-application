@@ -11,7 +11,6 @@ export default function DefaultLayout() {
         return <Navigate to="/login" />
     }
 
-    console.log(user);
     const onLogout = e => {
         e.preventDefault()
         setUser(null)
