@@ -58,22 +58,3 @@ export const useSortLikesPostData = () => {
         mutate
     }
 }
-
-export const useSortPostData = () => {
-    const { data, isLoading, isError, error, refetch } = useQuery(['s_posts'], async () => {
-        const response = await getAllPosts('sort[created_at]=1');
-        return response.data;
-    });
-    const { mutate } = useMutation(addPost, {
-        onSuccess: () => refetch()
-    });
-
-    return {
-        data,
-        isLoading,
-        isError,
-        error,
-        refetch,
-        mutate
-    }
-}
