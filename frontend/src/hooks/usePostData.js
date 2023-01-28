@@ -18,8 +18,6 @@ export const usePostData = () => {
         refetch,
         mutate
     }
-<<<<<<< Updated upstream
-=======
 }
 
 export const useSortPostData = () => {
@@ -59,5 +57,4 @@ export const useSortLikesPostData = () => {
         refetch,
         mutate
     }
->>>>>>> Stashed changes
 }

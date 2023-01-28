@@ -6,10 +6,6 @@ export const insertPost = async (post) => {
     return postMade
 }
 
-<<<<<<< Updated upstream
-export const getAllPosts = async ({ sort = { created_at: -1 }, filter = {}, page, limit = 0 }) => {
-    const post = await Post.find(filter).sort(sort).skip(page * limit).limit(limit).lean()
-=======
 export const getAllPosts = async ({ sort = { created_at: -1 }, filter = {}, page, limit = 0, likes = 0 }) => {
     if (likes == 1) {
         console.log(sort);
@@ -23,7 +19,6 @@ export const getAllPosts = async ({ sort = { created_at: -1 }, filter = {}, page
             { $sort: { "likes_count": 1 } }])
     }
     const post = await Post.find(filter).sort(sort).skip(page * limit).limit(limit).populate('user_id').lean()
->>>>>>> Stashed changes
     if (!post) return null
     return post
 }
