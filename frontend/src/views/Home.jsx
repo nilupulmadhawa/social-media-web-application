@@ -11,7 +11,7 @@ import FeedUpload from "../components/FeedUpload";
 
 export default function Home() {
     const { user } = useAuthContext();
-    const { sisLoading, serror, sdata } = useSortPostData();
+    const spost = useSortPostData();
     const { isLoading, error, data } = usePostData();
     const [posts, setPosts] = useState(data)
     const [sort, setSort] = useState("Newest")
@@ -37,6 +37,7 @@ export default function Home() {
         }
     }
 
+
     useEffect(() => {
         // setLoading(true)
         console.log(sort);
@@ -46,7 +47,7 @@ export default function Home() {
 
         }
         if (sort == "Oldest") {
-            setPosts(sdata)
+            setPosts(spost.data)
         }
         if (sort == "Popular") {
             // setPosts(p.sort((a, b) => parseFloat(a.likes.length) - parseFloat(b.likes.length)))
@@ -68,7 +69,7 @@ export default function Home() {
                         <select className="text-xl mb-4 focus:outline-none px-5" defaultValue={'Newest'} onChange={(e) => setSort(e.target.value)}>
                             <option>Newest</option>
                             <option >Oldest</option>
-                            <option>Popular</option>
+                            {/* <option>Popular</option> */}
                         </select>
 
                         {isLoading && <FeedLoading />}
