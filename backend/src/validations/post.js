@@ -7,14 +7,13 @@ export const addPostSchema = Joi.object({
 export const postViewSchema = {
     filter: Joi.object()
         .keys({
-            question: Joi.string().hex().length(24).optional(),
-            user: Joi.string().hex().length(24).optional(),
-            graded_by: Joi.string().hex().length(24).optional()
+            created_at: Joi.string().hex().length(24).optional(),
+            user_id: Joi.string().hex().length(24).optional(),
+            updated_at: Joi.string().hex().length(24).optional()
         })
         .optional(),
     sort: Joi.object()
         .keys({
-            score: Joi.any().valid('asc', 'desc', '1', '-1', 1, -1).optional(),
             created_at: Joi.any().valid('asc', 'desc', '1', '-1', 1, -1).optional(),
             updated_at: Joi.any().valid('asc', 'desc', '1', '-1', 1, -1).optional()
         })

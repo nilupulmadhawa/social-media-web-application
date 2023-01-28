@@ -7,7 +7,7 @@ export const insertPost = async (post) => {
 }
 
 export const getAllPosts = async ({ sort = { created_at: -1 }, filter = {}, page, limit = 0 }) => {
-    const post = await Post.find(filter).sort(sort).skip(page * limit).limit(limit).lean()
+    const post = await Post.find(filter).sort(sort).skip(page * limit).limit(limit).populate('user_id').lean()
     if (!post) return null
     return post
 }

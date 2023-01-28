@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useAuthContext } from "../context/AuthContext"
-import { usePostData } from "../hooks/usePostData"
+import { usePostData, useSortPostData } from "../hooks/usePostData"
 import Loading from 'react-fullscreen-loading';
 
 import Feeds from "../components/Feeds";
@@ -11,6 +11,7 @@ import FeedUpload from "../components/FeedUpload";
 
 export default function Home() {
     const { user } = useAuthContext();
+    const { sisLoading, serror, sdata } = useSortPostData();
     const { isLoading, error, data } = usePostData();
     const [posts, setPosts] = useState(data)
     const [sort, setSort] = useState("Newest")
@@ -21,7 +22,7 @@ export default function Home() {
     }, [data])
 
 
-    function dynamicSort(property) {
+    const dynamicSort = (property) => {
         var sortOrder = 1;
         if (property[0] === "-") {
             sortOrder = -1;
@@ -41,12 +42,11 @@ export default function Home() {
         console.log(sort);
         let p = posts;
         if (sort == "Newest") {
-            setPosts(p?.sort(dynamicSort("created_at")))
+            setPosts(data)
 
         }
-        if (sort == "Featured") {
-            console.log(p);
-            setPosts(p?.sort(dynamicSort("-created_at")))
+        if (sort == "Oldest") {
+            setPosts(sdata)
         }
         if (sort == "Popular") {
             // setPosts(p.sort((a, b) => parseFloat(a.likes.length) - parseFloat(b.likes.length)))
@@ -65,10 +65,10 @@ export default function Home() {
                 <div className="container mx-auto flex justify-center h-full">
                     <div className=" w-8/12 pr-4">
                         <FeedUpload />
-                        <select class="text-xl mb-4 focus:outline-none" defaultValue={'Newest'} onChange={(e) => setSort(e.target.value)}>
+                        <select className="text-xl mb-4 focus:outline-none px-5" defaultValue={'Newest'} onChange={(e) => setSort(e.target.value)}>
                             <option>Newest</option>
-                            <option>Featured</option>
-                            {/* <option>Popular</option> */}
+                            <option >Oldest</option>
+                            <option>Popular</option>
                         </select>
 
                         {isLoading && <FeedLoading />}
@@ -78,7 +78,7 @@ export default function Home() {
                                 id={item._id}
                                 likes={item.likes}
                                 created_at={item.created_at}
-                                userName={"u__graphics"}
+                                userName={item.user_id.username}
                                 imageUrl={item.image_url}
                             />
                         )}
