@@ -64,7 +64,7 @@ export default function Feeds(props) {
                                     </div>
                                 </div>
                                 <div className="center flex flex-row">
-                                    <span className="text-lg font-semibold ">u__graphics</span>
+                                    <span className="text-lg font-semibold ">{props?.userName}</span>
                                 </div>
                                 <div className="right">
                                     <div className="save">

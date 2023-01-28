@@ -85,7 +85,7 @@ export default function Profile() {
                                 width="100%"
                                 placeholderSrc="./assets/gray.png"
                                 className="object-cover aspect-square w-full" />
-                            <div class="absolute -bottom-52 group-hover:bottom-2 right-2 left-2 transition-all duration-500 bg-white dark:bg-[#ffffffb8] p-4 rounded shadow dark:shadow-gray-">
+                            <div className="absolute -bottom-52 group-hover:bottom-2 right-2 left-2 transition-all duration-500 bg-white dark:bg-[#ffffffb8] p-4 rounded shadow dark:shadow-gray-">
                                 <button onClick={() => _deletePost(post._id)}>
                                     <FontAwesomeIcon icon={regular('trash-can')} className="h-7 w-7 mx-5 flex text-center text-[#ec4b4a]" />
                                 </button>

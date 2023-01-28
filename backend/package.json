@@ -4,9 +4,8 @@
     "description": "Backend",
     "main": "src/app.js",
     "scripts": {
-        "build": "babel src -d dist",
         "dev": "nodemon --exec babel-node src/app.js",
-        "start": "node dist/app.js",
+        "start": "babel-node src/app.js",
         "test": "test"
     },
     "author": "",

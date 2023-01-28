@@ -23,7 +23,7 @@ export default function Home() {
     }, [data])
 
 
-    function dynamicSort(property) {
+    const dynamicSort = (property) => {
         var sortOrder = 1;
         if (property[0] === "-") {
             sortOrder = -1;
@@ -38,17 +38,17 @@ export default function Home() {
         }
     }
 
+
     useEffect(() => {
         // setLoading(true)
         console.log(sort);
         let p = posts;
         if (sort == "Newest") {
-            setPosts(p?.sort(dynamicSort("created_at")))
+            setPosts(data)
 
         }
-        if (sort == "Featured") {
-            console.log(p);
-            setPosts(p?.sort(dynamicSort("-created_at")))
+        if (sort == "Oldest") {
+            setPosts(spost.data)
         }
         if (sort == "Popular") {
             setPosts(lpost.data)
@@ -64,7 +64,7 @@ export default function Home() {
                 <div className="container mx-auto flex justify-center h-full">
                     <div className=" w-8/12 pr-4">
                         <FeedUpload />
-                        <select class="text-xl mb-4 focus:outline-none" defaultValue={'Newest'} onChange={(e) => setSort(e.target.value)}>
+                        <select className="text-xl mb-4 focus:outline-none px-5" defaultValue={'Newest'} onChange={(e) => setSort(e.target.value)}>
                             <option>Newest</option>
                             <option >Oldest</option>
                             <option>Popular</option>
@@ -77,7 +77,7 @@ export default function Home() {
                                 id={item._id}
                                 likes={item.likes}
                                 created_at={item.created_at}
-                                userName={"u__graphics"}
+                                userName={item.user_id.username}
                                 imageUrl={item.image_url}
                             />
                         )}
