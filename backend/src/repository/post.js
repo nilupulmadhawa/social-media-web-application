@@ -7,28 +7,9 @@ export const insertPost = async (post) => {
 }
 
 export const getAllPosts = async ({ sort = { created_at: -1 }, filter = {}, page, limit = 0 }) => {
-    const options = {
-        page,
-        limit,
-        collation: {
-            locale: 'en'
-        }
-    }
-
-    if (Object.keys(sort).length > 0) options.sort = sort
-    console.log(options);
-
-    const aggregateQuery = () =>
-        Post.aggregate([
-            {
-                $match: filter
-            },
-        ])
-
-    return await (page ? Post.aggregatePaginate(aggregateQuery(), options) : aggregateQuery()).catch((err) => {
-        logger.error(`An error occurred when retrieving posts - err: ${err.message}`)
-        throw err
-    })
+    const post = await Post.find(filter).sort(sort).skip(page * limit).limit(limit).lean()
+    if (!post) return null
+    return post
 }
 
 export const getOnePost = async (filters) => {

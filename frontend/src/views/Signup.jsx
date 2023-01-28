@@ -25,6 +25,11 @@ export default function Signup() {
             return
         }
 
+        if (passwordRef.current.value === passwordConfirmationRef.current.value) {
+            alert.error('Password and password confirmation do not match')
+            return
+        }
+
         const data = {
             first_name: fnameRef.current.value,
             last_name: lnameRef.current.value,

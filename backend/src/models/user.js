@@ -34,7 +34,8 @@ const UserSchema = new mongoose.Schema(
         },
         photo_url: {
             type: String,
-            required: false
+            required: false,
+            default: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
         },
     },
     {

@@ -9,7 +9,11 @@ export const getAllPosts = async (query = 'sort[created_at]=-1') => {
 }
 
 export const getMyPosts = async () => {
-    return await apiRequest(() => axiosInstance.get(`/post`))
+    return await apiRequest(() => axiosInstance.get(`/post/my`))
+}
+
+export const deletePost = async (id) => {
+    return await apiRequest(() => axiosInstance.delete(`/post/${id}`))
 }
 
 export const likePost = async (id) => {

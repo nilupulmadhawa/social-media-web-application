@@ -35,7 +35,7 @@ export default function DefaultLayout() {
                         <Link to={'profile'}>
                             <FontAwesomeIcon icon={regular('user')} className="h-7 w-7 mx-5 flex text-center" />
                         </Link>
-                        <Link>
+                        <Link to={'profileedit'}>
                             <FontAwesomeIcon icon={solid('gear')} className="h-7 w-7 mx-5 flex text-center" />
                         </Link>
                         {/* <button

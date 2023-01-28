@@ -8,6 +8,7 @@ import NotFound from "./views/NotFound";
 import Signup from "./views/Signup";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
+import ProfileEdit from "./views/ProfileEdit";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: '/profile',
                 element: <Profile />
+            },
+            {
+                path: '/profileedit',
+                element: <ProfileEdit />
             },
         ]
     },

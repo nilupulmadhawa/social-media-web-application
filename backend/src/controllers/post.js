@@ -18,6 +18,16 @@ export const getAll = asyncHandler(async (req, res) => {
     }
 })
 
+export const getMyPost = asyncHandler(async (req, res) => {
+    try {
+        req.query.filter = { "user_id": req.user._id }
+        const posts = await getPosts(req.query)
+        return makeResponse({ res, status: 200, data: posts, message: 'Posts retrieved succesfully' })
+    } catch (error) {
+        return makeResponse({ res, status: 500, message: error.message });
+    }
+})
+
 export const getById = asyncHandler(async (req, res) => {
     try {
         const ret = await getPostByID(req.params.id)
