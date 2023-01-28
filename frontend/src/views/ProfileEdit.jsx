@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Loading from 'react-fullscreen-loading';
 
 import { storage } from '../services/firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { useAlert } from 'react-alert'
 import { useAuthContext } from '../context/AuthContext'
-import { updateUser } from '../services/user'
+import { updateUser, resetPassword } from '../services/user'
 
 export default function ProfileEdit() {
     const { user, setUser } = useAuthContext();
@@ -13,6 +13,9 @@ export default function ProfileEdit() {
     const [lname, setLname] = useState('')
     const [uname, setUsername] = useState('')
     const alert = useAlert()
+    const currentPasswordRef = useRef()
+    const newPasswordRef = useRef()
+    const passwordConfirmationRef = useRef()
 
     const [loading, setLoading] = useState(false);
     const [file, setFile] = useState(null)
@@ -24,7 +27,10 @@ export default function ProfileEdit() {
 
     const onEdit = async (e) => {
         e.preventDefault()
-
+        if (fname === '' || lname === '' || uname === '') {
+            alert.error('Please fill in all fields')
+            return
+        }
 
         const data = {
             id: user._id,
@@ -103,8 +109,36 @@ export default function ProfileEdit() {
         }
     }, [file])
 
-    const changePassword = () => {
-        alert.info("This feature is not available yet");
+    const changePassword = async (e) => {
+        e.preventDefault()
+        const currentPassword = currentPasswordRef.current.value
+        const newPassword = newPasswordRef.current.value
+        const passwordConfirmation = passwordConfirmationRef.current.value
+
+        if (currentPassword === '' || newPassword === '' || passwordConfirmation === '') {
+            return alert.error("Please fill in all fields")
+        }
+
+        if (newPassword !== passwordConfirmation) {
+            return alert.error("Passwords do not match")
+        }
+
+        const data = {
+            old_password: currentPassword,
+            new_password: newPassword
+        }
+
+        await resetPassword(data).then((res) => {
+            if (res.success) {
+                alert.success(res.message);
+                currentPasswordRef.current.value = ''
+                newPasswordRef.current.value = ''
+                passwordConfirmationRef.current.value = ''
+
+            } else {
+                alert.error(res.message);
+            }
+        })
     }
 
     return (
@@ -270,6 +304,7 @@ export default function ProfileEdit() {
                                             name="cPassword"
                                             type="password"
                                             placeholder="******************"
+                                            ref={currentPasswordRef}
                                         />
                                     </div>
                                 </div>
@@ -287,6 +322,7 @@ export default function ProfileEdit() {
                                             id="password"
                                             name="nPassword"
                                             type="password"
+                                            ref={newPasswordRef}
                                             placeholder="******************"
                                         />
                                     </div>
@@ -305,6 +341,7 @@ export default function ProfileEdit() {
                                             id="password"
                                             name="rPassword"
                                             type="password"
+                                            ref={passwordConfirmationRef}
                                             placeholder="******************"
                                         />
                                     </div>

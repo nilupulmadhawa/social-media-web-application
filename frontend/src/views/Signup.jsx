@@ -25,7 +25,7 @@ export default function Signup() {
             return
         }
 
-        if (passwordRef.current.value === passwordConfirmationRef.current.value) {
+        if (passwordRef.current.value != passwordConfirmationRef.current.value) {
             alert.error('Password and password confirmation do not match')
             return
         }
@@ -36,10 +36,11 @@ export default function Signup() {
             username: usernameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            password_confirmation: passwordConfirmationRef.current.value,
+            reToken: ReCAPTCHARef.current.getValue()
         }
 
         await register(data).then((res) => {
+            console.log(res);
             if (res.success) {
                 alert.success(res.message);
                 navigate('/login')
