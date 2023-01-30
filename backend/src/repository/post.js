@@ -7,18 +7,20 @@ export const insertPost = async (post) => {
 }
 
 export const getAllPosts = async ({ sort = { created_at: -1 }, filter = {}, page, limit = 0, likes = 0 }) => {
+    let post
     if (likes == 1) {
-        console.log(sort);
-        return await Post.aggregate([
+        post = await Post.aggregate([
             { $addFields: { likes_count: { $size: { "$ifNull": ["$likes", []] } } } },
             { $sort: { "likes_count": -1 } }])
-    }
-    if (likes == 2) {
-        return await Post.aggregate([
+        await Post.populate(post, { path: "user_id" });
+    } else if (likes == 2) {
+        post = await Post.aggregate([
             { $addFields: { likes_count: { $size: { "$ifNull": ["$likes", []] } } } },
             { $sort: { "likes_count": 1 } }])
+        await Post.populate(post, { path: "user_id" });
+    } else {
+        post = await Post.find(filter).sort(sort).skip(page * limit).limit(limit).populate('user_id').lean()
     }
-    const post = await Post.find(filter).sort(sort).skip(page * limit).limit(limit).populate('user_id').lean()
     if (!post) return null
     return post
 }

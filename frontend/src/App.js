@@ -36,7 +36,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
             <AlertProvider template={AlertTemplate} {...options}>
                 <RouterProvider router={router} />
-                <ReactQueryDevtools initialIsOpen={false} />
+                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </AlertProvider>
         </QueryClientProvider>
     );

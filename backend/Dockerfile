@@ -1,13 +1,11 @@
-FROM node:14.16.0-alpine3.13
-
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
-
+FROM node:16-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+
 COPY . .
 
-CMD ["npm", "start"]
+RUN npm install
+RUN npm run build
+
+CMD ["node", "dist/app.js"]
 
 EXPOSE 3001

@@ -4,19 +4,25 @@
     "description": "Backend",
     "main": "src/app.js",
     "scripts": {
+        "build": "npm run build-babel && npm run copy",
+        "build-babel": "babel -d ./dist ./src -s",
+        "copy": "babel src --out-dir ./dist --copy-files",
         "dev": "nodemon --exec babel-node src/app.js",
-        "start": "babel-node src/app.js",
-        "test": "test"
+        "start": "node dist/app.js",
+        "lint": "eslint --ignore-path .gitignore && prettier . --write",
+        "test": "echo test"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^5.1.0",
         "celebrate": "^15.0.1",
+        "chai": "^4.3.7",
         "cors": "^2.8.5",
         "express": "^4.18.2",
         "helmet": "^6.0.1",
         "jsonwebtoken": "^9.0.0",
+        "mocha": "^10.2.0",
         "mongoose": "^6.8.4",
         "mongoose-aggregate-paginate-v2": "^1.0.6",
         "mongoose-paginate-v2": "^1.7.1",
@@ -31,6 +37,7 @@
         "@babel/node": "^7.20.7",
         "@babel/preset-env": "^7.20.2",
         "dotenv": "^16.0.3",
-        "eslint": "^8.32.0"
+        "eslint": "^8.32.0",
+        "supertest": "^6.3.3"
     }
 }
